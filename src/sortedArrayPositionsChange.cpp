@@ -12,8 +12,39 @@ NOTES:
 */
 
 #include <stdio.h>
-
+void swap(int*, int*);
+void swap(int* b, int* a)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
 void * sortedArrayPositionsChange(int *Arr, int len)
 {
+	if (len <= 1||Arr==NULL)
+		return NULL;
+	else if (Arr[0] > Arr[1] && Arr[len - 1] < Arr[len - 2])
+		swap(&Arr[0], &Arr[len - 1]);
+	else
+	{
+		int p1=-1, p2=-1;
+		for (int i = 0, j = len - 1; i < len - 1, j > 0; i++, j--)
+		{
+			if (Arr[i] > Arr[i + 1])
+			{
+				p1 = i;
+				i = len;
+			}
+			if (Arr[j - 1] > Arr[j])
+			{
+				p2 = j;
+				j = -1;
+			}
+		}
+		if (p1 == -1 && p2 == -1)
+			return NULL;
+		else
+			swap(&Arr[p1], &Arr[p2]);
+	}
 	return NULL;
 }
